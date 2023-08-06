@@ -1,0 +1,36 @@
+create a golf shop database
+
+CREATE TABLE inventory (id integer primary key, name text, color text, size text, price numeric, brand text, quantity integer);
+
+INSERT INTO inventory VALUES (1, "sweater", "red", "M", 40, "Nike", 3);
+
+INSERT INTO inventory VALUES (2, "sweater", "red", "S", 40, "Nike", 2);
+
+INSERT INTO inventory VALUES (3, "sweater", "red", "L", 40, "Nike", 5);
+SELECT * FROM inventory;
+
+INSERT INTO inventory VALUES (4, "shorts", "blue", "S", 35, "Adidas", 6);
+
+INSERT INTO inventory VALUES (5, "shorts", "blue", "M", 35, "Adidas", 2);
+
+INSERT INTO inventory VALUES (6, "shorts", "blue", "L", 35, "Adidas", 3);
+SELECT * FROM inventory;
+INSERT INTO inventory VALUES (7, "hat", "green", "one size", 18, "puma", 7);
+INSERT INTO inventory VALUES (8, "hat", "orange", "one size", 18, "puma", 4);
+INSERT INTO inventory VALUES (9, "hat", "black", "one size", 18, "titleist", 5);
+INSERT INTO inventory VALUES (10, "hat", "white", "one size", 18, "titleist", 3);
+INSERT INTO inventory VALUES (11, "glove", "white", "S", 10, "masters golf", 9);
+INSERT INTO inventory VALUES (12, "glove", "white", "M", 10, "masters golf", 7);
+INSERT INTO inventory VALUES (13, "glove", "white", "L", 10, "masters golf", 4);
+INSERT INTO inventory VALUES (14, "shirt", "yellow", "S", 30, "Adidas", 5);
+INSERT INTO inventory VALUES (15, "shirt", "yellow", "M", 30, "Adidias", 3);
+SELECT * FROM inventory;
+
+display the database ordered by price
+SELECT * FROM inventory ORDER by price;
+
+display the database ordered by color
+SELECT * FROM inventory ORDER by color;
+
+display the database ordered by brand
+SELECT * FROM inventory ORDER by brand;
