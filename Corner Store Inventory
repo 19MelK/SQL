@@ -1,0 +1,35 @@
+CREATE TABLE
+inventory ( item text, quantity integer, price integer, percent_margin integer, re_order text);
+
+INSERT INTO
+inventory VALUES ("oranges", 16, 2, 30, "weekly");
+INSERT INTO 
+inventory VALUES ( "gum", 35, 1, 50, "weekly");
+INSERT INTO
+inventory VALUES ("apples", 18, 1, 30, "weekly");
+INSERT INTO
+inventory VALUES ( "peaches", 32, 1, 60, "weekly");
+INSERT INTO
+inventory VALUES ( "sour patch kids", 17, 2, 25, "weekly");
+INSERT INTO 
+inventory VALUES ( "pork rinds", 5, 3, 35, "weekly");
+INSERT INTO
+inventory VALUES ( "bleach", 12, 4, 15, "monthly");
+INSERT INTO 
+inventory VALUES ( "dog treats", 14, 8, 35, "monthly");
+INSERT INTO
+inventory VALUES ( "kombucha", 23, 3, 10, "weekly");
+INSERT INTO 
+inventory VALUES ( "chocolate ice cream", 10, 4, 32, "daily");
+INSERT INTO
+inventory VALUES ( "vanilla ice cream", 12, 4, 30, "daily");
+INSERT INTO
+inventory VALUES ( "strawberry ice cream", 8, 4, 12, "weekly");
+INSERT INTO
+inventory VALUES ( "rocky road ice cream", 16, 4, 28, "daily");
+INSERT INTO 
+inventory VALUES ( "ice cream sandwiches", 13, 3, 65, "daily");
+INSERT INTO 
+inventory VALUES ( "reese's peanut butter cups", 22, 2, 50,  "daily");
+
+SELECT * from inventory GROUP by item order by percent_margin desc;
