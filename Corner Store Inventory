@@ -32,4 +32,5 @@ inventory VALUES ( "ice cream sandwiches", 13, 3, 65, "daily");
 INSERT INTO 
 inventory VALUES ( "reese's peanut butter cups", 22, 2, 50,  "daily");
 
+display the data base ordered by profit margin, highest to lowest
 SELECT * from inventory GROUP by item order by percent_margin desc;
