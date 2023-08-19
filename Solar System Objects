@@ -1,3 +1,8 @@
+/* 
+Solar system objects
+Adapted from: http://en.wikipedia.org/wiki/List_of_Solar_System_objects_by_size
+Collected by: https://www.khanacademy.org/profile/patrick809/programs
+*/
 CREATE TABLE solar_system_objects(
   body TEXT
 , mean_radius NUMERIC         /* km */
@@ -45,14 +50,43 @@ INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_
 INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_rel,mass,mass_rel,density,surface_gravity,surface_gravity_rel,type_of_object,shape) VALUES ('Tethys ',531.1,0.083,0.624,0.0006,0.6173,0.000103,0.984,0.145,0.015,'satellite of Saturn','round');
 INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_rel,mass,mass_rel,density,surface_gravity,surface_gravity_rel,type_of_object,shape) VALUES ('Ceres ',476.2,0.076,0.437,0.0004,0.95,0.000159,2.077,0.27,0.0275,'dwarf planet belt asteroid','round');
 
-/*display the mass of objects in our solar system with mass > 150*10^21 kg in descending order*/
+
 SELECT Body, type_of_object, mass From solar_system_objects WHERE mass > 150 ORDER BY mass desc;
 
-/*display the volume of objects in our solar system with mass > 150*10^21 kg in descending order*/
 SELECT Body, type_of_object, volume FROM solar_system_objects WHERE mass > 150 ORDER BY volume desc;
 
-/*display the density of objects in our solar system with mass > 150*10^21 kg in descending order*/
 SELECT Body, type_of_object, density FROM solar_system_objects WHERE mass > 150 ORDER BY density desc;
 
-/*display the surface gravity relative to Earth's and the density relative to Earth's of objects in our solar system with mass > 150*10^21 kg in descending order*/
+SELECT Body, type_of_object, mean_radius_rel FROM solar_system_objects WHERE mass > 150 ORDER BY mean_radius desc;
+
 SELECT Body, type_of_object, surface_gravity_rel, ROUND(density/5.514, 4) AS density_rel FROM solar_system_objects WHERE mass > 150 ORDER BY surface_gravity desc;
+
+SELECT Body AS "planets with mass > Earth", type_of_object, mass_rel AS "mass relative to Earth" FROM solar_system_objects GROUP BY mass_rel HAVING mass_rel > 1 ORDER BY volume_rel desc;
+
+SELECT Body AS "planets with volume > Earth", type_of_object, volume_rel AS "volume relative to Earth" FROM solar_system_objects GROUP BY volume_rel HAVING volume_rel > 1 ORDER BY volume_rel desc;
+
+SELECT Body AS "planets with surface gravity > Earth", type_of_object, surface_gravity_rel AS "surface gravity relative to Earth" FROM solar_system_objects GROUP BY volume_rel HAVING surface_gravity_rel > 0.99732 ORDER BY volume_rel desc;
+
+SELECT Body AS "planet with mass > than Earth but surface gravtity < Earth", type_of_object, mass_rel AS "mass realtive to Earth", surface_gravity_rel AS "surface gravity relative to Earth" FROM solar_system_objects WHERE mass_rel >1 AND surface_gravity_rel < 0.99732;
+
+SELECT Body, type_of_object, 
+
+    CASE 
+        WHEN ROUND(density/5.514, 4) >1 THEN "greater than Earth"
+        WHEN ROUND(density/5.514, 4) <1 THEN "less than Earth"
+    END AS "relative density",
+    
+    CASE
+        WHEN mean_radius_rel > 1 THEN "greater than Earth"
+        WHEN mean_radius_rel <1 THEN "less than Earth"
+    END AS "relative radius",
+    
+    CASE
+        WHEN surface_gravity_rel > 0.99732 THEN "greater than Earth"
+        WHEN surface_gravity_rel < 0.99732 THEN "less than Earth"
+    END AS "relative gravity at the surface"
+    
+FROM solar_system_objects WHERE mass > 150 ORDER BY surface_gravity_rel desc;
+
+
+
