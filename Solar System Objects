@@ -45,10 +45,14 @@ INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_
 INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_rel,mass,mass_rel,density,surface_gravity,surface_gravity_rel,type_of_object,shape) VALUES ('Tethys ',531.1,0.083,0.624,0.0006,0.6173,0.000103,0.984,0.145,0.015,'satellite of Saturn','round');
 INSERT INTO solar_system_objects(body,mean_radius,mean_radius_rel,volume,volume_rel,mass,mass_rel,density,surface_gravity,surface_gravity_rel,type_of_object,shape) VALUES ('Ceres ',476.2,0.076,0.437,0.0004,0.95,0.000159,2.077,0.27,0.0275,'dwarf planet belt asteroid','round');
 
+/*display the mass of objects in our solar system with mass > 150*10^21 kg in descending order*/
 SELECT Body, type_of_object, mass From solar_system_objects WHERE mass > 150 ORDER BY mass desc;
 
+/*display the volume of objects in our solar system with mass > 150*10^21 kg in descending order*/
 SELECT Body, type_of_object, volume FROM solar_system_objects WHERE mass > 150 ORDER BY volume desc;
 
+/*display the density of objects in our solar system with mass > 150*10^21 kg in descending order*/
 SELECT Body, type_of_object, density FROM solar_system_objects WHERE mass > 150 ORDER BY density desc;
 
+/*display the surface gravity relative to Earth's and the density relative to Earth's of objects in our solar system with mass > 150*10^21 kg in descending order*/
 SELECT Body, type_of_object, surface_gravity_rel, ROUND(density/5.514, 4) AS density_rel FROM solar_system_objects WHERE mass > 150 ORDER BY surface_gravity desc;
