@@ -1,0 +1,134 @@
+/* Create table about the people and what they do here */
+create table player
+(id INTEGER PRIMARY KEY, name TEXT, position TEXT, years_played INTEGER);
+
+INSERT INTO player
+VALUES (1, "Gordie Howe", "Wing", 26);
+INSERT INTO player
+VALUES (2, "Bobby Orr", "Defence", 12);
+INSERT INTO player
+VALUES (3, "Wayne Gretsky", "Center", 20);
+INSERT INTO player
+VALUES (4, "Mario Lemieux", "Center", 17);
+INSERT INTO player
+VALUES (5, "Jaromir Jagr", "Wing", 24);
+INSERT INTO player
+VALUES (6, "Sydney Crosby", "Center",18);
+INSERT INTO player
+VALUES (7, "Conner McDavid", "Center", 8);
+INSERT INTO player
+VALUES (8, "Raymond Bourque", "Defence", 22);
+INSERT INTO player
+VALUES (9, "Patrice Bergeron", "Center", 19);
+INSERT INTO player
+VALUES (10, "Brad Marchand", "Wing", 14);
+INSERT INTO player
+VALUES (11, "David Pastrnak", "Wing", 9);
+INSERT INTO player
+VALUES (12, "Maurice Richard", "Wing", 18);
+INSERT INTO player
+VALUES (13, "Guy Lafleur", "Wing", 17);
+INSERT INTO player
+VALUES (14, "Mark Messier", "Wing", 25);
+INSERT INTO player
+VALUES (15, "Bobby Hull", "Wing", 17);
+
+create table home_town
+(player_id INTEGER PRIMARY KEY, home_town TEXT, year_born INTEGER);
+
+INSERT INTO home_town
+VALUES (1, "Floral Saskatchewan", 1928);
+INSERT INTO home_town
+VALUES (2, "Parry Sound Ontario", 1948);
+INSERT INTO home_town
+VALUES (3, "Brantford Ontario", 1961);
+INSERT INTO home_town
+VALUES (4, "Montreal Quebec", 1965);
+INSERT INTO home_town
+VALUES (5, "Kladno Chech Rebublic", 1972);
+INSERT INTO home_town
+VALUES (6, "Halifax Nova Scotia", 1987);
+INSERT INTO home_town
+VALUES (7, "Richmond Hill Ontario", 1997);
+INSERT INTO home_town
+VALUES (8, "Montreal Quebec", 1960);
+INSERT INTO home_town
+VALUES (9, "L'Ancienne-Lorette Quebec", 1985);
+INSERT INTO home_town
+VALUES (10, "Halifax Nova Scotia", 1988);
+INSERT INTO home_town
+VALUES (11, "Havirov Chech Republic", 1996);
+INSERT INTO home_town
+VALUES (12, "Montreal Quebec", 1921);
+INSERT INTO home_town
+VALUES (13, "Thurso Quebec", 1951);
+INSERT INTO home_town
+VALUES (14, "Edmonton Alberta", 1961);
+INSERT INTO home_town
+VALUES (15, "Point Anne Ontario", 1939);
+
+create table career_stats
+(player_id INTEGER PRIMARY KEY, career_goals INTEGER, career_assists INTEGER, Stanley_cup_wins INTEGER);
+
+INSERT INTO career_stats
+VALUES (1, 801, 1049, 4);
+INSERT INTO career_stats
+VALUES (2, 270, 645, 2);
+INSERT INTO career_stats
+VALUES (3, 894, 1963, 4);
+INSERT INTO career_stats
+VALUES (4, 690, 1033, 2);
+INSERT INTO career_stats
+VALUES (5, 766, 1155, 2);
+INSERT INTO career_stats
+VALUES (6, 550, 952, 3);
+INSERT INTO career_stats
+VALUES (7, 303, 547, 0);
+INSERT INTO career_stats
+VALUES (8, 410, 1169, 1);
+INSERT INTO career_stats
+VALUES (9, 427, 613, 1);
+INSERT INTO career_stats
+VALUES (10, 372, 490, 1);
+INSERT INTO career_stats
+VALUES (11, 301, 316, 0);
+INSERT INTO career_stats
+VALUES (12, 544, 422, 8);
+INSERT INTO career_stats
+VALUES (13, 560, 793, 5);
+INSERT INTO career_stats
+VALUES (14, 694, 1193, 6);
+INSERT INTO career_stats
+VALUES (15, 610, 560, 1);
+
+/* Using an OUTER JOIN to list players and their home towns*/
+SELECT player.name, home_town.home_town
+FROM player
+JOIN home_town
+ON player.id = home_town.player_id;
+
+/* Using an OUTER JOIN to list players and how many Stanley Cups they've won*/
+SELECT player.name, career_stats.Stanley_cup_wins
+FROM player
+JOIN career_stats
+ON player.id = career_stats.player_id
+GROUP BY player.name ORDER BY career_stats.Stanley_cup_wins desc;
+
+/* Using an OUTER JOIN to list players, the position they played and aggregating data to calculate and list total career points*/
+SELECT player.name, player.position, (career_goals+career_assists) AS "career points"
+FROM player
+JOIN career_stats
+ON player.id = career_stats.player_id
+ORDER BY "career points" desc;
+
+/* Using an implicit JOIN to list player and the number of years they played*/
+SELECT player.name, player.years_played
+FROM player
+ORDER BY years_played desc;
+
+/* Using an OUTER JOIN to list player, the position they played and aggregated data to calculate and list the average points per year for each player*/
+SELECT player.name, player.position, ((career_goals+career_assists)/years_played) AS "average points per year"
+FROM player
+JOIN Career_stats
+ON player.id = career_stats.player_id
+ORDER BY "average points per year" desc;
