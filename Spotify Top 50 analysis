@@ -1,0 +1,103 @@
+
+CREATE TABLE BIT_DB.Spotifydata (
+id integer PRIMARY KEY,
+artist_name varchar NOT NULL,
+track_name varchar NOT NULL,
+track_id varchar NOT NULL,
+popularity integer NOT NULL,
+danceability decimal(4,3) NOT NULL,
+energy decimal(4,3) NOT NULL,
+song_key integer NOT NULL,
+loudness decimal(5,3) NOT NULL,
+song_mode integer NOT NULL,
+speechiness decimal(5,4) NOT NULL,
+acousticness decimal(6,5) NOT NULL,
+instrumentalness decimal(8,7) NOT NULL,
+liveness decimal(5,4) NOT NULL,
+valence decimal(4,3) NOT NULL,
+tempo decimal(6,3) NOT NULL,
+duration_ms integer NOT NULL,
+time_signature integer NOT NULL );
+
+
+SELECT* 
+FROM BIT_DB.Spotifydata;
+
+
+/* return the 10 most popular songs with name of the artist.*/
+
+SELECT artist_name, track_name, popularity
+FROM BIT_DB.Spotifydata
+ORDER BY popularity desc
+LIMIT 10;
+
+
+/* Which the keys are the songs written in.*/
+
+SELECT track_name, song_key, popularity
+FROM BIT_DB.Spotifydata
+GROUP BY track_name
+ORDER BY popularity desc;
+
+/* What is the average popularity of each key?*/
+
+SELECT song_key, ((COUNT(song_key))*popularity)/COUNT(song_key) AS "average popularity"
+FROM BIT_DB.Spotifydata
+GROUP BY song_key
+ORDER BY "average popularity" desc;
+
+
+/* Modify the table to return the average popularity of each song key, 
+and identifying each key with it's standard letter designation.*/
+
+UPDATE BIT_DB.Spotifydata SET song_key = "C" 
+WHERE song_key = 0;
+UPDATE BIT_DB.Spotifydata SET song_key = "C#/Db" 
+WHERE song_key = 1;
+UPDATE BIT_DB.Spotifydata SET song_key = "D" 
+WHERE song_key = 2;
+UPDATE BIT_DB.Spotifydata SET song_key = "D#/Eb" 
+WHERE song_key = 3;
+UPDATE BIT_DB.Spotifydata SET song_key = "E" 
+WHERE song_key = 4;
+UPDATE BIT_DB.Spotifydata SET song_key = "F" 
+WHERE song_key = 5;
+UPDATE BIT_DB.Spotifydata SET song_key = "F#/Gb" 
+WHERE song_key = 6;
+UPDATE BIT_DB.Spotifydata SET song_key = "G" 
+WHERE song_key = 7;
+UPDATE BIT_DB.Spotifydata SET song_key = "G#/Ab" 
+WHERE song_key = 8;
+UPDATE BIT_DB.Spotifydata SET song_key = "A" 
+WHERE song_key = 9;
+UPDATE BIT_DB.Spotifydata SET song_key = "A#/Bb" 
+WHERE song_key = 10;
+UPDATE BIT_DB.Spotifydata SET song_key = "B" 
+WHERE song_key = 11;
+
+SELECT song_key, ((COUNT(song_key))*popularity)/COUNT(song_key) AS "average popularity"
+FROM BIT_DB.Spotifydata
+GROUP BY song_key
+ORDER BY "average popularity" desc;
+
+/* What is the average popularity of each artist?*/
+
+SELECT artist_name, ((COUNT(artist_name))*popularity)/COUNT(artist_name) AS "artist average popularity"
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY "artist average popularity" desc;
+
+
+/* Determine whether songs are written in a Major or Minor key, 
+and show result along with artist and track name, and average popularity of each song key.
+List in order of average popularity of each song key.*/
+
+UPDATE BIT_DB.Spotifydata SET song_mode = "MINOR"
+WHERE song_mode = 0;
+UPDATE BIT_DB.Spotifydata SET song_mode = "MAJOR"
+WHERE song_mode = 1;
+
+SELECT artist_name, track_name, song_key,  song_mode, ((COUNT(song_key))*popularity)/COUNT(song_key) AS "average popularity"
+FROM BIT_DB.Spotifydata
+GROUP BY track_name
+ORDER BY "average popularity" desc;
