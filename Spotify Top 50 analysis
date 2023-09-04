@@ -1,4 +1,3 @@
-
 CREATE TABLE BIT_DB.Spotifydata (
 id integer PRIMARY KEY,
 artist_name varchar NOT NULL,
@@ -25,19 +24,25 @@ FROM BIT_DB.Spotifydata;
 
 
 /* return the 10 most popular songs with name of the artist.*/
-
 SELECT artist_name, track_name, popularity
 FROM BIT_DB.Spotifydata
 ORDER BY popularity desc
 LIMIT 10;
 
 
-/* Which the keys are the songs written in.*/
+/* Which keys are the songs written in?*/
 
 SELECT track_name, song_key, popularity
 FROM BIT_DB.Spotifydata
 GROUP BY track_name
 ORDER BY popularity desc;
+
+/* What is the average popularity of each artist?*/
+
+SELECT artist_name,  SUM(popularity)/COUNT(artist_name) AS "artist average popularity"
+FROM BIT_DB.Spotifydata
+GROUP BY artist_name
+ORDER BY "artist average popularity" desc;
 
 /* What is the average popularity of each key?*/
 
@@ -75,29 +80,25 @@ WHERE song_key = 10;
 UPDATE BIT_DB.Spotifydata SET song_key = "B" 
 WHERE song_key = 11;
 
-SELECT song_key, SUM(popularity)/COUNT(song_key) AS "average popularity"
+SELECT song_key,  SUM(popularity)/COUNT(song_key) AS "average popularity"
 FROM BIT_DB.Spotifydata
 GROUP BY song_key
 ORDER BY "average popularity" desc;
 
-/* What is the average popularity of each artist?*/
 
-SELECT artist_name, SUM(popularity)/COUNT(artist_name) AS "artist average popularity"
-FROM BIT_DB.Spotifydata
-GROUP BY artist_name
-ORDER BY "artist average popularity" desc;
 
 
 /* Determine whether songs are written in a Major or Minor key, 
-and show result along with artist and track name, and average popularity of each song key.
-List in order of average popularity of each song key.*/
+and show result along with artist and track name, and popularity of each song.
+List in order of popularity of songs.*/
 
 UPDATE BIT_DB.Spotifydata SET song_mode = "MINOR"
 WHERE song_mode = 0;
 UPDATE BIT_DB.Spotifydata SET song_mode = "MAJOR"
 WHERE song_mode = 1;
 
-SELECT artist_name, track_name, song_key,  song_mode, SUM(popularity)/COUNT(song_key) AS "average popularity"
+
+SELECT artist_name, track_name, song_key, song_mode, popularity
 FROM BIT_DB.Spotifydata
 GROUP BY track_name
-ORDER BY "average popularity" desc;
+ORDER BY popularity desc;
