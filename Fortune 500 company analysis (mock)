@@ -1,0 +1,39 @@
+
+/* using CASE determine which companies have healthcare benefits
+and order them according to the number paid time off days they provide*/    
+
+SELECT company_name, paid_time_off_days,
+CASE
+  WHEN healthcare_benefits = 1 THEN "yes"
+  WHEN healthcare_benefits = 0 THEN "no"
+  ELSE "unknown"
+END as healthcare_benefits_provided
+FROM fortune_companies
+ORDER BY paid_time_off_days desc;
+
+/* select companies with revenue over 300 
+and order them by the number of paid time off days given to employees*/
+
+SELECT company_name, revenue, healthcare_benefits, paid_time_off_days
+FROM fortune_companies
+WHERE revenue > 300
+GROUP BY company_name
+ORDER BY paid_time_off_days;
+
+/*group companies into their respective industries
+and determine which industries have average employee tenures > 5 years*/
+
+SELECT industry, ROUND(AVG(avg_employee_tenure)) as average_tenure
+FROM fortune_companies
+GROUP BY industry
+HAVING AVG(avg_employee_tenure)> 5;
+
+/*group companies into their respective industries
+and determine which industries have average employee tenures > 5 years
+and greater than 200000 people employed*/
+
+SELECT industry, ROUND(AVG(avg_employee_tenure)) as average_tenure, 
+SUM(employees) as people_employed_in_industry
+FROM fortune_companies
+GROUP BY industry
+HAVING AVG(avg_employee_tenure)> 5 AND SUM(employees)> 200000;
