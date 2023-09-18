@@ -1,0 +1,20 @@
+/*Working with a dataset called chinook, which represents a digital media store
+ and includes tables for artists, albums, media tracks, invoices, and customers. */
+
+/*Joined multiple tables to compare how many songs of each genre were ordered in each country*/
+
+
+SELECT invoices.BillingCountry, genres.Name, COUNT(invoice_items.Quantity)
+FROM chinook.artists
+JOIN chinook.albums
+ON artists.Artistid=albums.Artistid
+JOIN chinook.tracks
+ON albums.Albumid=tracks.Albumid
+JOIN chinook.genres
+ON genres.Genreid=tracks.Genreid
+JOIN chinook.invoice_items
+ON tracks.Trackid=invoice_items.Trackid
+JOIN chinook.invoices
+ON invoice_items.Invoiceid=invoices.Invoiceid
+GROUP BY invoices.BillingCountry, genres.Name
+ORDER BY invoices.BillingCountry, genres.Name;
