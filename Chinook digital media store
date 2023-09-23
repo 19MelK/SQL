@@ -1,7 +1,7 @@
 /*Working with a dataset called chinook, which represents a digital media store
  and includes tables for artists, albums, media tracks, invoices, and customers. */
 
-/*Joined multiple tables to compare how many songs of each genre were ordered in each country*/
+/*Query joining multiple tables to compare how many songs of each genre were ordered in each country*/
 
 
 SELECT invoices.BillingCountry, genres.Name, COUNT(invoice_items.Quantity)
@@ -18,3 +18,22 @@ JOIN chinook.invoices
 ON invoice_items.Invoiceid=invoices.Invoiceid
 GROUP BY invoices.BillingCountry, genres.Name
 ORDER BY invoices.BillingCountry, genres.Name;
+
+
+/*Query joining multiple tables, aggregating data and using CASE expression
+to return values showing each sales employee's yearly sales totals, rounded to 2 decimal places, over 5 years of data.*/
+
+SELECT  employees.FirstName, employees.LastName, ROUND(SUM(invoices.Total),2) AS 'yearly sales totals',
+CASE
+    WHEN  invoices.InvoiceDate LIKE  '2009%' THEN "2009 sales total"
+    WHEN invoices.InvoiceDate LIKE  '2010%' THEN "2010 sales total"
+    WHEN  invoices.InvoiceDate LIKE  '2011%' THEN "2011 sales total"
+    WHEN invoices.InvoiceDate LIKE  '2012%' THEN "2012 sales total"
+    ELSE "2013 sales total"
+END AS "year"
+FROM chinook.invoices
+JOIN chinook.customers
+ON invoices.Customerid=customers.CustomerId
+JOIN chinook.employees
+ON customers.SupportRepid=employees.Employeeid
+GROUP BY employees.LastName, "year";
