@@ -63,3 +63,22 @@ JOIN chinook.artists
 ON albums.ArtistId=artists.ArtistId
 GROUP BY artists.Name
 ORDER BY COUNT(invoice_items.Trackid) desc;
+
+
+
+/* Query using JOINS and aggregation to return the 10 best selling tracks from the
+artist with the most tracks sold.*/
+
+SELECT COUNT(invoice_items.Trackid) AS 'tracks sold', artists.Name AS 'Artist', tracks.Name,
+ROUND(SUM(invoice_items.UnitPrice),2)*Quantity AS 'Total sales'
+FROM chinook.invoice_items
+JOIN chinook.tracks
+ON invoice_items.Trackid=tracks.TrackID
+JOIN chinook.albums
+ON tracks.AlbumId=albums.AlbumId
+JOIN chinook.artists
+ON albums.ArtistId=artists.ArtistId
+WHERE artists.Name LIKE '%Iron Maiden%'
+GROUP BY tracks.Name
+ORDER BY COUNT(invoice_items.Trackid) desc
+LIMIT 10;
