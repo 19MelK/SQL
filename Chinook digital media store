@@ -93,8 +93,8 @@ JOIN chinook.tracks
 ON invoice_items.Trackid=tracks.TrackId
 JOIN chinook.media_types
 ON tracks.MediaTypeid=media_types.MediaTypeId
-GROUP BY Media_type;
-
+GROUP BY Media_type
+ORDER BY COUNT(invoice_items.Trackid) desc;
 
 
 /* Query using JOINS and aggregation across multiple tables
@@ -107,3 +107,4 @@ ON invoice_items.Trackid=tracks.TrackId
 JOIN chinook.genres
 ON tracks.Genreid=genres.GenreId
 GROUP BY genres.Name
+ORDER BY COUNT(invoice_items.Trackid) desc;
