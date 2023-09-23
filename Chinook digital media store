@@ -21,7 +21,8 @@ ORDER BY invoices.BillingCountry, genres.Name;
 
 
 /*Query joining multiple tables, aggregating data and using CASE expression
-to return values showing each sales employee's yearly sales totals, rounded to 2 decimal places, over 5 years of data.*/
+to return values showing each sales employee's yearly sales totals, 
+rounded to 2 decimal places, over 5 years of data.*/
 
 SELECT  employees.FirstName, employees.LastName, ROUND(SUM(invoices.Total),2) AS 'yearly sales totals',
 CASE
@@ -45,3 +46,20 @@ SELECT billingCountry,
 ROUND(SUM(invoices.Total),2) as 'total 5 year sales by country'
 FROM invoices
 GROUP BY billingCountry;
+
+
+/* Query using JOINs and aggregate functions to return total number of tracks sold and total sales for each artist
+rounded to 2 decimal places.
+Ordered from most to least tracks sold.*/
+
+SELECT COUNT(invoice_items.Trackid) AS 'tracks sold', artists.Name AS 'Artist', 
+ROUND(SUM(invoice_items.UnitPrice),2)*Quantity AS 'Total sales'
+FROM chinook.invoice_items
+JOIN chinook.tracks
+ON invoice_items.Trackid=tracks.TrackID
+JOIN chinook.albums
+ON tracks.AlbumId=albums.AlbumId
+JOIN chinook.artists
+ON albums.ArtistId=artists.ArtistId
+GROUP BY artists.Name
+ORDER BY COUNT(invoice_items.Trackid) desc;
