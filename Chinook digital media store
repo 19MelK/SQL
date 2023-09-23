@@ -36,4 +36,4 @@ JOIN chinook.customers
 ON invoices.Customerid=customers.CustomerId
 JOIN chinook.employees
 ON customers.SupportRepid=employees.Employeeid
-GROUP BY employees.LastName, "year";
+GROUP BY  "year", employees.LastName ;
