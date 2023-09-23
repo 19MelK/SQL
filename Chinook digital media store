@@ -82,3 +82,28 @@ WHERE artists.Name LIKE '%Iron Maiden%'
 GROUP BY tracks.Name
 ORDER BY COUNT(invoice_items.Trackid) desc
 LIMIT 10;
+
+
+/*Query using JOINS and aggregation across multiple tables
+ to return the number of tracks sold by Media type.*/
+
+SELECT COUNT(invoice_items.Trackid) AS 'tracks sold', media_types.Name AS Media_type
+FROM chinook.invoice_items
+JOIN chinook.tracks
+ON invoice_items.Trackid=tracks.TrackId
+JOIN chinook.media_types
+ON tracks.MediaTypeid=media_types.MediaTypeId
+GROUP BY Media_type;
+
+
+
+/* Query using JOINS and aggregation across multiple tables
+to return the number of tracks sold by genre.*/
+
+SELECT COUNT(invoice_items.Trackid) AS 'tracks sold', genres.Name AS Genre
+FROM chinook.invoice_items
+JOIN chinook.tracks
+ON invoice_items.Trackid=tracks.TrackId
+JOIN chinook.genres
+ON tracks.Genreid=genres.GenreId
+GROUP BY genres.Name
