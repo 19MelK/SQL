@@ -37,3 +37,11 @@ ON invoices.Customerid=customers.CustomerId
 JOIN chinook.employees
 ON customers.SupportRepid=employees.Employeeid
 GROUP BY  "year", employees.LastName ;
+
+
+/* Query using aggregation to return 5 year sales totals by country.*/
+
+SELECT billingCountry,
+ROUND(SUM(invoices.Total),2) as 'total 5 year sales by country'
+FROM invoices
+GROUP BY billingCountry;
